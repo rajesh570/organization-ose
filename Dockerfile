@@ -1,16 +1,14 @@
 FROM java:7
 
-EXPOSE 3004
+EXPOSE 8080
 
-RUN curl -O http://jenkins-registrar.dev-prsn.com:8080/view/PaaS%20POC/job/openshift-deploy-singleService/lastSuccessfulBuild/artifact/service/target/organization-jar-with-dependencies.jar
+RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/target/organization-api-0.0.9-SNAPSHOT-jar-with-dependencies.jar
+RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/dev/environment.properties
+RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/dev/logback.xml
 
-RUN curl -O http://jenkins-registrar.dev-prsn.com:8080/view/PaaS%20POC/job/openshift-deploy-singleService/lastSuccessfulBuild/artifact/service/config/environment.properties
-
-RUN curl -O http://jenkins-registrar.dev-prsn.com:8080/view/PaaS%20POC/job/openshift-deploy-singleService/lastSuccessfulBuild/artifact/service/config/version.properties
 RUN mkdir -p config/dev
-RUN mv version.properties config/dev
+RUN mv environment.properties config/dev
+RUN mv logback.xml config/dev
 
-RUN curl -O http://jenkins-registrar.dev-prsn.com:8080/view/PaaS%20POC/job/openshift-deploy-singleService/lastSuccessfulBuild/artifact/service/config/logback.xml
-
-ENV SERVERS "java -classpath organization-jar-with-dependencies.jar com.pearson.grid.organization.Main"
+ENV SERVERS "java -classpath organization-api-0.0.9-SNAPSHOT-jar-with-dependencies.jar com.pearson.grid.organization.Main dev"
 CMD sh -c "eval $SERVERS"
