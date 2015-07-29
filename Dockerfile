@@ -3,8 +3,8 @@ FROM java:7
 EXPOSE 8080
 
 RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/target/organization-api-0.0.9-SNAPSHOT-jar-with-dependencies.jar
-RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/dev/environment.properties
-RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/dev/logback.xml
+RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/cloud-dev/environment.properties
+RUN curl -O http://wolfbuild.prsn.us/view/Build/job/build-organization/ws/organization-api/config/cloud-dev/logback.xml
 
 RUN mkdir -p config/dev
 RUN mv environment.properties config/dev
